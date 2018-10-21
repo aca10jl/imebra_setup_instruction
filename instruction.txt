@@ -21,6 +21,7 @@ source ~/.bashrc
 # test with "HelloWorld.cpp"
 cd ~/imebra
 wget https://raw.githubusercontent.com/aca10jl/imebra_setup_instruction/master/test.cpp
+wget https://raw.githubusercontent.com/aca10jl/imebra_setup_instruction/master/000001.dcm
 g++ -std=c++11 -Ilibrary/include test.cpp -o test -L. -limebra
 ./test
 
