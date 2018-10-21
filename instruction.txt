@@ -1,0 +1,36 @@
+# install dependent APP & libraries
+sudo apt update
+sudo apt install build-essential mercurial doxygen g++ lcov python python-pip libgtest-dev ant cmake swig -y
+
+# download imebra library
+sudo apt install wget unzip -y
+cd ~
+wget https://bitbucket.org/binarno/imebra/downloads/imebra_4_1_3_1.zip
+unzip imebra_4_1_3_1.zip -d imebra
+mv imebra_4_1_3_1.zip imebra
+
+# compile imebra library
+cd ~/imebra
+cmake .
+cmake --build .
+
+# setup environment varibales
+echo 'export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:~/imebra' >> ~/.bashrc
+source ~/.bashrc
+
+# test with "HelloWorld"
+echo "#include <iostream>
+#include <imebra/imebra.h>
+
+using namespace std;
+
+int main() 
+{
+    cout << "Hello, World!";
+    unique_ptr<imebra::DataSet> loadedDataSet(imebra::CodecFactory::load("DicomFile.dcm"));
+    return 0;
+}" >> ~/imebra/test.cpp
+cd ~/imebra
+g++ -std=c++11 -Ilibrary/include test.cpp -o test -L. -limebra
+./test
+
